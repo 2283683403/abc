@@ -11,7 +11,7 @@
     </div>
     <!-- 侧边栏 -->
     <el-menu
-      active-text-color="#c0c0c0"
+      active-text-color="#fff"
       background-color="#304156"
       class="el-menu-vertical-demo"
       default-active="2"
@@ -20,7 +20,12 @@
       :unique-opened="true"
       router
     >
-      <el-menu-item index="/profile">
+      <sidebartwo
+        v-for="item in data"
+        :key="item"
+        :menuList="item"
+      ></sidebartwo>
+      <!-- <el-menu-item index="/profile">
         <el-icon><UserFilled /></el-icon>
         <span>个人中心</span>
       </el-menu-item>
@@ -61,12 +66,13 @@
           <el-icon><ChatLineSquare /></el-icon>
           创建文章
         </el-menu-item>
-      </el-sub-menu>
+      </el-sub-menu> -->
     </el-menu>
   </div>
 </template>
 
 <script setup>
+import sidebartwo from './sidebarTwo.vue'
 import { defineProps } from 'vue'
 
 const props = defineProps({
@@ -74,6 +80,80 @@ const props = defineProps({
     type: Boolean
   }
 })
+
+const data = [
+  {
+    path: '/profile',
+    name: 'profile',
+    meta: {
+      title: '个人中心'
+    }
+  },
+  {
+    path: '/chart',
+    name: 'chart',
+    meta: {
+      title: '数据可视化'
+    }
+  },
+  {
+    path: '/user',
+    redirect: '/user/manage',
+    meta: {
+      title: '用户'
+    },
+    children: [
+      {
+        path: '/user/manage',
+        name: 'userManage',
+        meta: {
+          title: '员工管理'
+        },
+        children: []
+      },
+      {
+        path: '/user/role',
+        name: 'userRole',
+        meta: {
+          title: '角色列表'
+        }
+      },
+      {
+        path: '/user/permission',
+        name: 'userPermission',
+        meta: {
+          title: '权限列表'
+        }
+      }
+    ]
+  },
+  {
+    path: '/article',
+    redirect: '/article/ranking',
+    meta: {
+      title: '文章'
+    },
+    props: {
+      default: false
+    },
+    children: [
+      {
+        path: '/article/ranking',
+        name: 'articleRanking',
+        meta: {
+          title: '文章排名'
+        }
+      },
+      {
+        path: '/article/create',
+        name: 'articleCreate',
+        meta: {
+          title: '文章创建'
+        }
+      }
+    ]
+  }
+]
 </script>
 
 <style lang="scss" scoped>

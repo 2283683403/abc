@@ -24,8 +24,9 @@
           <i class="iconfont icon-sousuoleimufill"></i>
         </div>
         <!-- 放大 -->
-        <div class="magnify">
-          <i class="iconfont icon-quanping_o"></i>
+        <div class="magnify" @click="full">
+          <i class="iconfont icon-quanping_o" v-if="!isFull"></i>
+          <i class="iconfont icon-tuichuquanping" v-else></i>
         </div>
         <!-- 换肤 -->
         <el-tooltip content="换肤" placement="bottom">
@@ -49,8 +50,21 @@
 </template>
 
 <script setup>
-import { defineEmits, defineProps } from 'vue'
+import { defineEmits, defineProps, ref } from 'vue'
+// 全屏的插件
+import screenfull from 'screenfull'
 
+// 全屏切换的变量
+const isFull = ref(false)
+
+// 全屏切换功能实现
+const full = () => {
+  screenfull.toggle()
+  if (!screenfull.isEnabled) {
+    alert('该浏览器不支持全屏功能')
+  }
+  isFull.value = !isFull.value
+}
 const props = defineProps({
   isCollapse: {
     type: Boolean

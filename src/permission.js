@@ -4,7 +4,6 @@ const whiteList = ['/login']
 router.beforeEach((to, from, next) => {
   // 获取token
   const token = localStorage.getItem('token')
-  console.log(token)
   if (token) {
     if (to.path === '/login') {
       next(from.path)
