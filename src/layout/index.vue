@@ -14,7 +14,6 @@
       <!-- 右侧下方主内容 -->
       <!-- <div class="mainContent"></div> -->
       <maincontent></maincontent>
-      1
     </div>
   </div>
 </template>
