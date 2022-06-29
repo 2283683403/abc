@@ -18,12 +18,13 @@
       text-color="#c0c0c0"
       :collapse="props.isCollapses"
       :unique-opened="true"
+      router
     >
-      <el-menu-item index="1">
+      <el-menu-item index="/profile">
         <el-icon><UserFilled /></el-icon>
         <span>个人中心</span>
       </el-menu-item>
-      <el-menu-item index="2">
+      <el-menu-item index="/chart">
         <el-icon><TrendCharts /></el-icon>
         <span>数据可视化</span>
       </el-menu-item>
@@ -33,15 +34,15 @@
           <el-icon><User /></el-icon>
           <span>用户</span>
         </template>
-        <el-menu-item index="3-1">
+        <el-menu-item index="/user/manage">
           <el-icon><User /></el-icon>
           员工管理
         </el-menu-item>
-        <el-menu-item index="3-2"
+        <el-menu-item index="/user/role"
           ><el-icon><Tickets /></el-icon>
           角色列表
         </el-menu-item>
-        <el-menu-item index="3-2">
+        <el-menu-item index="/user/permission">
           <el-icon><Lollipop /></el-icon>
           权限列表
         </el-menu-item>
@@ -52,11 +53,11 @@
           <el-icon><Tickets /></el-icon>
           <span>文章</span>
         </template>
-        <el-menu-item index="4-1">
+        <el-menu-item index="/article/ranking">
           <el-icon><Operation /></el-icon>
           文章排名
         </el-menu-item>
-        <el-menu-item index="4-1">
+        <el-menu-item index="/article/create">
           <el-icon><ChatLineSquare /></el-icon>
           创建文章
         </el-menu-item>
