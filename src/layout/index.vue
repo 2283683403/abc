@@ -14,6 +14,7 @@
       <!-- 右侧下方主内容 -->
       <!-- <div class="mainContent"></div> -->
       <maincontent></maincontent>
+      2
     </div>
   </div>
 </template>
