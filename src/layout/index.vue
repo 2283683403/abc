@@ -12,7 +12,6 @@
         <navigations></navigations>
       </div>
       <!-- 右侧下方主内容 -->
-      <!-- <div class="mainContent"></div> -->
       <maincontent></maincontent>
       1
     </div>

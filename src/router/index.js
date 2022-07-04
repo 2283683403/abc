@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import index from '../layout/index.vue'
 // 公有路由表
 const publicRoutes = [
@@ -19,7 +19,7 @@ const publicRoutes = [
         component: () => import('../views/profile'),
         meta: {
           title: '个人中心',
-          icon: ''
+          icon: '123'
         }
       },
       {
@@ -28,7 +28,7 @@ const publicRoutes = [
         component: () => import('../views/chart'),
         meta: {
           title: '数据可视化',
-          icon: ''
+          icon: '123'
         }
       },
       {
@@ -134,7 +134,7 @@ const privateRoutes = [
 ]
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes: [...publicRoutes, ...privateRoutes]
 })
 

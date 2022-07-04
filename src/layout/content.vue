@@ -7,10 +7,25 @@
         <el-icon v-if="props.isCollapse === false"><Fold /></el-icon>
         <el-icon v-else><Expand /></el-icon>
       </div>
+
       <!-- 导航名字 -->
       <div class="dataText">
-        <span>数据可视化</span>
+        <!-- <span>数据可视化</span> -->
+        <el-breadcrumb class="breadcrumb" separator="/">
+          <template v-for="(item, index) in breadcrumbData" :key="index">
+            <el-breadcrumb-item
+              v-if="index !== breadcrumbData.length - 1"
+              :to="{ path: item.path }"
+            >
+              {{ item.meta.title }}
+            </el-breadcrumb-item>
+            <el-breadcrumb-item v-else>
+              <span class="s1">{{ item.meta.title }}</span>
+            </el-breadcrumb-item>
+          </template>
+        </el-breadcrumb>
       </div>
+
       <!-- 右侧功能图标 -->
       <div class="right-menu">
         <!-- 指导 -->
@@ -42,7 +57,16 @@
         </el-tooltip>
         <!-- logo -->
         <div class="logoSmall">
-          <img src="../../public/login.png" alt="" />
+          <el-dropdown @command="handleCommand">
+            <img src="../../public/login.png" alt="" />
+            <template #dropdown>
+              <el-dropdown-menu>
+                <el-dropdown-item command="home">首页</el-dropdown-item>
+                <el-dropdown-item command="profile">课程</el-dropdown-item>
+                <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+              </el-dropdown-menu>
+            </template>
+          </el-dropdown>
         </div>
       </div>
     </div>
@@ -50,13 +74,25 @@
 </template>
 
 <script setup>
-import { defineEmits, defineProps, ref } from 'vue'
+import { defineEmits, defineProps, ref, computed } from 'vue'
 // 全屏的插件
 import screenfull from 'screenfull'
+// 路由
+import { useRouter, useRoute } from 'vue-router'
 
+import { useStore } from 'vuex'
+
+const router = useRouter()
+
+const route = useRoute()
 // 全屏切换的变量
 const isFull = ref(false)
 
+const store = useStore()
+
+const breadcrumbData = computed(() => {
+  return route.matched.filter((item) => item.meta.title)
+})
 // 全屏切换功能实现
 const full = () => {
   screenfull.toggle()
@@ -65,14 +101,42 @@ const full = () => {
   }
   isFull.value = !isFull.value
 }
+
 const props = defineProps({
   isCollapse: {
     type: Boolean
   }
 })
+
+// 接收变量
 const collapse = defineEmits(['isCollapse'])
 const newCollapse = () => {
   collapse('isCollapse')
+}
+
+// 点击退出登录，首页，等按钮
+const handleCommand = (command) => {
+  switch (command) {
+    case 'home':
+      handleToHome()
+      break
+    case 'logout':
+      handleLogout()
+      break
+  }
+}
+// 返回首页
+const handleToHome = () => {
+  router.push('/')
+}
+// 退出登录
+const handleLogout = async () => {
+  try {
+    await store.dispatch('user/logout')
+    router.push('/login')
+  } catch (err) {
+    console.log(err)
+  }
 }
 </script>
 
@@ -100,10 +164,12 @@ const newCollapse = () => {
     // 导航名字显示
     .dataText {
       float: left;
-      margin-left: 16px;
-      line-height: 45px;
-      font-size: 14px;
-      color: #c0c0c0;
+      .el-breadcrumb {
+        margin-left: 16px;
+        line-height: 45px;
+        font-size: 14px;
+        color: #c0c0c0;
+      }
     }
     // 右侧功能图标区域
     .right-menu {
@@ -167,5 +233,8 @@ const newCollapse = () => {
       }
     }
   }
+}
+.s1 {
+  cursor: pointer;
 }
 </style>
